@@ -2,6 +2,7 @@
   "name": "pomodoro-method",
   "version": "0.1.0",
   "private": true,
+  "homepage" : "./",
   "dependencies": {
     "@testing-library/jest-dom": "^5.14.1",
     "@testing-library/react": "^11.2.7",
@@ -41,5 +42,5 @@
     "gh-pages": "^3.2.3"
   },
   "predeploy": "npm run build",
-  "deploy": "gh-pages -d dist"  
+  "deploy": "gh-pages -d dist"
 }
