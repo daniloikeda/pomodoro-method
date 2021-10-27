@@ -12,13 +12,15 @@ export default class Timer extends Component {
     };
   }
 
-  updateState() {
-    var reloadedState = {
-      timerStopped: true,
-      countdown: this.props.countdown,
-      remainingCountDown: this.props.countdown
-    };
-    this.setState(reloadedState);
+  componentDidUpdate(previousProps, previousState) {
+    if (previousProps !== this.props) {
+      var reloadedState = {
+        timerStopped: true,
+        countdown: this.props.countdown,
+        remainingCountDown: this.props.countdown
+      };
+      this.setState(reloadedState);
+    }
   }
 
   //#region functions
@@ -28,9 +30,7 @@ export default class Timer extends Component {
     this.timerId = setInterval(() => {
       this.setState({ remainingCountDown: this.state.remainingCountDown - 1 });
       if (this.state.remainingCountDown < 0) {
-        clearInterval(this.timerId);
-        this.props.proceedToTheNextStep();
-        this.updateState();
+        this.handleNextAction();
       }
     }, 1000);
   };
@@ -44,6 +44,12 @@ export default class Timer extends Component {
     clearInterval(this.timerId);
     this.setState({timerStopped: true, remainingCountDown: this.state.countdown});
   };
+
+  handleNextAction = () => {
+    clearInterval(this.timerId);
+    this.props.proceedToTheNextStep();
+    // this.reloadState();
+  }
 
   //#endregion
 
@@ -75,6 +81,13 @@ export default class Timer extends Component {
           >
             <i className="stop icon"></i>
             Stop
+          </button>
+          <button
+            className="ui labeled icon button"
+            onClick={this.handleNextAction}
+          >
+            <i className="chevron right icon"></i>
+            Next
           </button>
         </div>
       </div>

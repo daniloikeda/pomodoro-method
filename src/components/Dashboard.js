@@ -12,12 +12,12 @@ export default class Dashboard extends Component {
           {
             title: StepTitleEnum.Focusing,
             timePeriod: 25,
-            action: StepActionEnum.Completed
+            action: StepActionEnum.Active
           },
           {
             title: StepTitleEnum.Break,
             timePeriod: 5,
-            action: StepActionEnum.Active
+            action: StepActionEnum.Disabled
           },
           {
             title: StepTitleEnum.Focusing,
@@ -30,10 +30,7 @@ export default class Dashboard extends Component {
     getActiveStepTimePeriod = () => {
         var step = this.state.steps.find(step => step.action === StepActionEnum.Active);
         if (step === undefined) {
-            step = this.addActiveStep();
-            var steps = this.state.steps;
-            steps.push(step);
-            this.setState({steps: steps});
+            return undefined;
         }
         return step.timePeriod;
     };
@@ -51,7 +48,9 @@ export default class Dashboard extends Component {
         } else {
             addedStep = {title: StepTitleEnum.Break, timePeriod: 5, action: StepActionEnum.Active}
         }
-        return addedStep;
+        
+        steps.push(addedStep);
+        this.setState({steps: steps});
     }
 
     proceedToTheNextStep = () => {
@@ -61,9 +60,21 @@ export default class Dashboard extends Component {
         steps[activeStepIndex].action = StepActionEnum.Completed;
         if (steps.length - 1 > activeStepIndex) {            
             steps[activeStepIndex + 1].action = StepActionEnum.Active;
+            this.setState({steps: steps})
+        }
+        else {
+            var lastStep = steps[steps.length - 1];
+            var addedStep;
+            if (lastStep === undefined || lastStep.title === StepTitleEnum.Break) {
+                addedStep = {title: StepTitleEnum.Focusing, timePeriod: 25, action: StepActionEnum.Active}
+            } else {
+                addedStep = {title: StepTitleEnum.Break, timePeriod: 5, action: StepActionEnum.Active}
+            }
+            
+            steps.push(addedStep);
+            this.setState({steps: steps});
         }
 
-        this.setState({steps: steps})
     };
 
     render() {
