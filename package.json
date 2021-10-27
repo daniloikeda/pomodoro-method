@@ -2,7 +2,7 @@
   "name": "pomodoro-method",
   "version": "0.1.0",
   "private": true,
-  "homepage" : "./",
+  "homepage": "https://daniloikeda.github.io/pomorodo-method/",
   "dependencies": {
     "@testing-library/jest-dom": "^5.14.1",
     "@testing-library/react": "^11.2.7",
@@ -15,6 +15,8 @@
     "web-vitals": "^1.1.2"
   },
   "scripts": {
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d dist",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
@@ -40,7 +42,5 @@
   },
   "devDependencies": {
     "gh-pages": "^3.2.3"
-  },
-  "predeploy": "npm run build",
-  "deploy": "gh-pages -d dist"
+  }
 }
