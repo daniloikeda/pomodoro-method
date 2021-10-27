@@ -1,8 +1,8 @@
 {
   "files": {
     "main.css": "/pomorodo-method/static/css/main.1e657886.chunk.css",
-    "main.js": "/pomorodo-method/static/js/main.30c44565.chunk.js",
-    "main.js.map": "/pomorodo-method/static/js/main.30c44565.chunk.js.map",
+    "main.js": "/pomorodo-method/static/js/main.25fb6019.chunk.js",
+    "main.js.map": "/pomorodo-method/static/js/main.25fb6019.chunk.js.map",
     "runtime-main.js": "/pomorodo-method/static/js/runtime-main.a06a18a9.js",
     "runtime-main.js.map": "/pomorodo-method/static/js/runtime-main.a06a18a9.js.map",
     "static/css/2.831e4de6.chunk.css": "/pomorodo-method/static/css/2.831e4de6.chunk.css",
@@ -21,6 +21,6 @@
     "static/css/2.831e4de6.chunk.css",
     "static/js/2.47538acf.chunk.js",
     "static/css/main.1e657886.chunk.css",
-    "static/js/main.30c44565.chunk.js"
+    "static/js/main.25fb6019.chunk.js"
   ]
 }
