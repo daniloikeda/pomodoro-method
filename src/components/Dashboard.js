@@ -1,14 +1,13 @@
-import React, { Component } from 'react'
+import React, { useState } from 'react'
 import Timer from './Timer'
 import ActivityTracker from './ActivityTracker'
 import './Dashboard.css'
 import { StepActionEnum } from '../enums/StepActionEnum'
 import { StepTitleEnum } from '../enums/StepTitleEnum'
 
-export default class Dashboard extends Component {
+function Dashboard () {
     
-    state = {
-        steps: [
+    const [steps, setSteps] = useState([
           {
             title: StepTitleEnum.Focusing,
             timePeriod: 25,
@@ -24,21 +23,19 @@ export default class Dashboard extends Component {
             timePeriod: 25,
             action: StepActionEnum.Disabled
           }
-        ]
-    };
+        ]);
 
-    getActiveStepTimePeriod = () => {
-        var step = this.state.steps.find(step => step.action === StepActionEnum.Active);
+    const getActiveStepTimePeriod = () => {
+        var step = steps.find(step => step.action === StepActionEnum.Active);
         if (step === undefined) {
             return undefined;
         }
         return step.timePeriod;
     };
 
-    addActiveStep = () => {
-        var steps = this.state.steps;
+    const addActiveStep = () => {
         if (steps === undefined){
-            steps = [];
+            setSteps([]);
         }
 
         var lastStep = steps[steps.length - 1];
@@ -48,21 +45,25 @@ export default class Dashboard extends Component {
         } else {
             addedStep = {title: StepTitleEnum.Break, timePeriod: 5, action: StepActionEnum.Active}
         }
-        
-        steps.push(addedStep);
-        this.setState({steps: steps});
+        setSteps([...steps, addedStep])
     }
 
-    proceedToTheNextStep = () => {
-        var activeStepIndex = this.state.steps.findIndex((step) => step.action === StepActionEnum.Active);
+    const proceedToTheNextStep = () => {
+        var [activeStepIndex, shouldAddOneMoreStep] = [undefined, true];
+        var updatedSteps = steps.map((step, stepIndex) => {
+            if (step.action === StepActionEnum.Active) {
+                activeStepIndex = stepIndex;
+                step.action = StepActionEnum.Completed;
+            }
+            if (activeStepIndex != undefined && (activeStepIndex + 1) === stepIndex && steps.length - 1 > activeStepIndex) {
+                steps[stepIndex].action = StepActionEnum.Active;
+                shouldAddOneMoreStep = false;
+            }
 
-        var steps = this.state.steps;
-        steps[activeStepIndex].action = StepActionEnum.Completed;
-        if (steps.length - 1 > activeStepIndex) {            
-            steps[activeStepIndex + 1].action = StepActionEnum.Active;
-            this.setState({steps: steps})
-        }
-        else {
+            return step;
+        });
+        
+        if (shouldAddOneMoreStep) {
             var lastStep = steps[steps.length - 1];
             var addedStep;
             if (lastStep === undefined || lastStep.title === StepTitleEnum.Break) {
@@ -70,19 +71,41 @@ export default class Dashboard extends Component {
             } else {
                 addedStep = {title: StepTitleEnum.Break, timePeriod: 5, action: StepActionEnum.Active}
             }
-            
-            steps.push(addedStep);
-            this.setState({steps: steps});
+            setSteps(steps => [...updatedSteps, addedStep]);
         }
-
-    };
-
-    render() {
-        return (
-            <div className="dashboard">
-                <ActivityTracker steps={this.state.steps}></ActivityTracker>
-                <Timer countdown={this.getActiveStepTimePeriod()} proceedToTheNextStep={this.proceedToTheNextStep}></Timer>
-            </div>
-        )
+        else {
+            setSteps(steps => updatedSteps);
+        }
     }
+
+    // const proceedToTheNextStep = () => {
+    //     var activeStepIndex = steps.findIndex((step) => step.action === StepActionEnum.Active);
+
+    //     var updatedSteps = steps;
+    //     updatedSteps[activeStepIndex].action = StepActionEnum.Completed;
+    //     if (steps.length - 1 > activeStepIndex) {            
+    //         steps[activeStepIndex + 1].action = StepActionEnum.Active;
+    //         setSteps(steps => updatedSteps)
+    //     }
+    //     else {
+    //         var lastStep = steps[steps.length - 1];
+    //         var addedStep;
+    //         if (lastStep === undefined || lastStep.title === StepTitleEnum.Break) {
+    //             addedStep = {title: StepTitleEnum.Focusing, timePeriod: 25, action: StepActionEnum.Active}
+    //         } else {
+    //             addedStep = {title: StepTitleEnum.Break, timePeriod: 5, action: StepActionEnum.Active}
+    //         }
+    //         setSteps(steps => [...steps, addedStep]);
+    //     }
+
+    // };
+
+    return (
+        <div className="dashboard">
+            <ActivityTracker steps={steps}></ActivityTracker>
+            <Timer countdown={getActiveStepTimePeriod()} proceedToTheNextStep={proceedToTheNextStep}></Timer>
+        </div>
+    );
 }
+
+export default Dashboard;

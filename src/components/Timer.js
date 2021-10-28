@@ -1,96 +1,86 @@
-import React, { Component } from "react";
-import './Timer.css'
+import React, { useState, useEffect } from "react";
+import { useCallback } from "react/cjs/react.development";
+import "./Timer.css";
 
-export default class Timer extends Component {
-
-  constructor(props) {
-    super(props);
-    this.state = {
-      timerStopped: true,
-      countdown: props.countdown,
-      remainingCountDown: props.countdown
-    };
-  }
-
-  componentDidUpdate(previousProps, previousState) {
-    if (previousProps !== this.props) {
-      var reloadedState = {
-        timerStopped: true,
-        countdown: this.props.countdown,
-        remainingCountDown: this.props.countdown
-      };
-      this.setState(reloadedState);
-    }
-  }
+function Timer(props) {
+  const _MAX_SECONDS = 60;
+  const [countdown, setCountdown] = useState(props.countdown);
+  const [timerId, setTimerId] = useState();
+  const [timerStopped, setTimerStopped] = useState(true);
+  const [remainingCountDown, setRemainingCountDown] = useState(props.countdown);
 
   //#region functions
-  handlePlayButtonClick = () => {
-    this.setState({ timerStopped: false });
+  const handlePlayButtonClick = () => {
+    setTimerStopped(false);
 
-    this.timerId = setInterval(() => {
-      this.setState({ remainingCountDown: this.state.remainingCountDown - 1 });
-      if (this.state.remainingCountDown < 0) {
-        this.handleNextAction();
-      }
-    }, 1000);
-  };
-
-  handlePauseButtonClick = () => {
-    clearInterval(this.timerId);
-    this.setState({ timerStopped: true });
-  };
-
-  handleResetButtonClick = () => {
-    clearInterval(this.timerId);
-    this.setState({timerStopped: true, remainingCountDown: this.state.countdown});
-  };
-
-  handleNextAction = () => {
-    clearInterval(this.timerId);
-    this.props.proceedToTheNextStep();
-    // this.reloadState();
-  }
-
-  //#endregion
-
-  render() {
-    const { remainingCountDown } = this.state;
-    return (
-      <div className="timer">
-        <div className="ui horizontal statistic">
-          <div className="value">{remainingCountDown}</div>
-          <div className="label">minutes</div>
-        </div>
-        <div className="timer-buttons-wrap">
-          <button
-            className="ui labeled icon button"
-            onClick={
-              this.state.timerStopped === false
-                ? this.handlePauseButtonClick
-                : this.handlePlayButtonClick
-            }
-          >
-            <i
-              className={!this.state.timerStopped ? "pause icon" : "play icon"}
-            ></i>
-            {!this.state.timerStopped ? "Pause" : "Play"}
-          </button>
-          <button
-            className="ui labeled icon button"
-            onClick={this.handleResetButtonClick}
-          >
-            <i className="stop icon"></i>
-            Stop
-          </button>
-          <button
-            className="ui labeled icon button"
-            onClick={this.handleNextAction}
-          >
-            <i className="chevron right icon"></i>
-            Next
-          </button>
-        </div>
-      </div>
+    setTimerId(
+      setInterval(() => {
+        setRemainingCountDown((remainingCountDown) => remainingCountDown - 1);
+      }, 1000)
     );
   }
+
+  const handlePauseButtonClick = () => {
+    clearInterval(timerId);
+    setTimerStopped(true);
+  };
+
+  const handleResetButtonClick = () => {
+    clearInterval(timerId);
+    setTimerStopped(true);
+    setRemainingCountDown(countdown);
+  };
+
+  const handleNextAction = useCallback(() => {
+    clearInterval(timerId);
+    props.proceedToTheNextStep();
+  }, [props, timerId]);
+  
+  useEffect(() => {
+    setTimerStopped(true);
+    setCountdown(props.countdown);
+    setRemainingCountDown(props.countdown);
+
+  }, [props.countdown]);
+
+  useEffect(() => {
+    if (remainingCountDown < 0) {
+      handleNextAction();
+    }
+  }, [remainingCountDown, handleNextAction]);
+
+  return (
+    <div className="timer">
+      <div className="ui horizontal statistic">
+        <div className="value">{remainingCountDown}</div>
+        <div className="label">minutes</div>
+      </div>
+      <div className="timer-buttons-wrap">
+        <button
+          className="ui labeled icon button"
+          onClick={
+            timerStopped === false
+              ? handlePauseButtonClick
+              : handlePlayButtonClick
+          }
+        >
+          <i className={!timerStopped ? "pause icon" : "play icon"}></i>
+          {!timerStopped ? "Pause" : "Play"}
+        </button>
+        <button
+          className="ui labeled icon button"
+          onClick={handleResetButtonClick}
+        >
+          <i className="stop icon"></i>
+          Stop
+        </button>
+        <button className="ui labeled icon button" onClick={handleNextAction}>
+          <i className="chevron right icon"></i>
+          Next
+        </button>
+      </div>
+    </div>
+  );
 }
+
+export default Timer;
