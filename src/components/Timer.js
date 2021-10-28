@@ -3,11 +3,10 @@ import { useCallback } from "react/cjs/react.development";
 import "./Timer.css";
 
 function Timer(props) {
-  const _MAX_SECONDS = 60;
-  const [countdown, setCountdown] = useState(props.countdown);
+  const [countdown, setCountdown] = useState(0);
   const [timerId, setTimerId] = useState();
   const [timerStopped, setTimerStopped] = useState(true);
-  const [remainingCountDown, setRemainingCountDown] = useState(props.countdown);
+  const [remainingCountDown, setRemainingCountDown] = useState(0);
 
   //#region functions
   const handlePlayButtonClick = () => {
@@ -31,6 +30,9 @@ function Timer(props) {
     setRemainingCountDown(countdown);
   };
 
+  const seconds = String(remainingCountDown % 60).padStart(2, 0);
+  const minutes = String(Math.floor(remainingCountDown / 60)).padStart(2, 0);
+
   const handleNextAction = useCallback(() => {
     clearInterval(timerId);
     props.proceedToTheNextStep();
@@ -38,8 +40,8 @@ function Timer(props) {
   
   useEffect(() => {
     setTimerStopped(true);
-    setCountdown(props.countdown);
-    setRemainingCountDown(props.countdown);
+    setCountdown(props.countdown * 60);
+    setRemainingCountDown(props.countdown * 60);
 
   }, [props.countdown]);
 
@@ -51,9 +53,15 @@ function Timer(props) {
 
   return (
     <div className="timer">
-      <div className="ui horizontal statistic">
-        <div className="value">{remainingCountDown}</div>
-        <div className="label">minutes</div>
+      <div className="countdown">
+        <div className="ui small statistic">
+          <div className="value">{minutes}</div>
+          <div className="label">minutes</div>
+        </div>
+        <div className="ui small statistic">
+          <div className="value">{seconds}</div>
+          <div className="label">seconds</div>
+        </div>
       </div>
       <div className="timer-buttons-wrap">
         <button

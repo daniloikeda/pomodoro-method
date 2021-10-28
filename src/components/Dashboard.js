@@ -78,28 +78,6 @@ function Dashboard () {
         }
     }
 
-    // const proceedToTheNextStep = () => {
-    //     var activeStepIndex = steps.findIndex((step) => step.action === StepActionEnum.Active);
-
-    //     var updatedSteps = steps;
-    //     updatedSteps[activeStepIndex].action = StepActionEnum.Completed;
-    //     if (steps.length - 1 > activeStepIndex) {            
-    //         steps[activeStepIndex + 1].action = StepActionEnum.Active;
-    //         setSteps(steps => updatedSteps)
-    //     }
-    //     else {
-    //         var lastStep = steps[steps.length - 1];
-    //         var addedStep;
-    //         if (lastStep === undefined || lastStep.title === StepTitleEnum.Break) {
-    //             addedStep = {title: StepTitleEnum.Focusing, timePeriod: 25, action: StepActionEnum.Active}
-    //         } else {
-    //             addedStep = {title: StepTitleEnum.Break, timePeriod: 5, action: StepActionEnum.Active}
-    //         }
-    //         setSteps(steps => [...steps, addedStep]);
-    //     }
-
-    // };
-
     return (
         <div className="dashboard">
             <ActivityTracker steps={steps}></ActivityTracker>
