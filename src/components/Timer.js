@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect } from "react";
 import "./Timer.css";
 
 function Timer(props) {
@@ -29,18 +29,18 @@ function Timer(props) {
     setRemainingCountDown(countdown);
   };
 
-  const seconds = String(remainingCountDown % 60).padStart(2, 0);
-  const minutes = String(Math.floor(remainingCountDown / 60)).padStart(2, 0);
+  var seconds = String(remainingCountDown % 60).padStart(2, 0);
+  var minutes = String(Math.floor(remainingCountDown / 60)).padStart(2, 0);
 
-  const handleNextAction = useCallback(() => {
+  const handleNextAction = () => {
     clearInterval(timerId);
     props.proceedToTheNextStep();
-  }, [props, timerId]);
+  }
   
   useEffect(() => {
     setTimerStopped(true);
-    setCountdown(props.countdown * 60);
-    setRemainingCountDown(props.countdown * 60);
+    setCountdown(props.countdown);
+    setRemainingCountDown(props.countdown);
 
   }, [props.countdown]);
 
@@ -48,7 +48,7 @@ function Timer(props) {
     if (remainingCountDown < 0) {
       handleNextAction();
     }
-  }, [remainingCountDown, handleNextAction]);
+  }, [remainingCountDown]);
 
   return (
     <div className="timer">

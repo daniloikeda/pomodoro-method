@@ -33,11 +33,7 @@ function Dashboard () {
         return step.timePeriod;
     };
 
-    const addActiveStep = () => {
-        if (steps === undefined){
-            setSteps([]);
-        }
-
+    const newActiveStep = () => {
         var lastStep = steps[steps.length - 1];
         var addedStep;
         if (lastStep === undefined || lastStep.title === StepTitleEnum.Break) {
@@ -45,7 +41,7 @@ function Dashboard () {
         } else {
             addedStep = {title: StepTitleEnum.Break, timePeriod: 5, action: StepActionEnum.Active}
         }
-        setSteps([...steps, addedStep])
+        return addedStep;
     }
 
     const proceedToTheNextStep = () => {
@@ -55,7 +51,7 @@ function Dashboard () {
                 activeStepIndex = stepIndex;
                 step.action = StepActionEnum.Completed;
             }
-            if (activeStepIndex != undefined && (activeStepIndex + 1) === stepIndex && steps.length - 1 > activeStepIndex) {
+            if (activeStepIndex !== undefined && (activeStepIndex + 1) === stepIndex && steps.length - 1 > activeStepIndex) {
                 steps[stepIndex].action = StepActionEnum.Active;
                 shouldAddOneMoreStep = false;
             }
@@ -64,13 +60,7 @@ function Dashboard () {
         });
         
         if (shouldAddOneMoreStep) {
-            var lastStep = steps[steps.length - 1];
-            var addedStep;
-            if (lastStep === undefined || lastStep.title === StepTitleEnum.Break) {
-                addedStep = {title: StepTitleEnum.Focusing, timePeriod: 25, action: StepActionEnum.Active}
-            } else {
-                addedStep = {title: StepTitleEnum.Break, timePeriod: 5, action: StepActionEnum.Active}
-            }
+            var addedStep = newActiveStep();
             setSteps(steps => [...updatedSteps, addedStep]);
         }
         else {
