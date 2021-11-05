@@ -39,8 +39,8 @@ function Timer(props) {
   
   useEffect(() => {
     setTimerStopped(true);
-    setCountdown(props.countdown);
-    setRemainingCountDown(props.countdown);
+    setCountdown(props.countdown * 60);
+    setRemainingCountDown(props.countdown * 60);
 
   }, [props.countdown]);
 
