@@ -1,6 +1,7 @@
 import './App.css';
 import 'semantic-ui-css/semantic.min.css'
-import Dashboard from './components/Dashboard';
+import Dashboard from './pages/Dashboard';
+import Contact from './components/Contact';
 
 function App() {
   return (

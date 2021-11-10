@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
-import Timer from './Timer'
-import ActivityTracker from './ActivityTracker'
+import Timer from '../components/Timer'
+import ActivityTracker from '../components/ActivityTracker'
 import './Dashboard.css'
 import { StepActionEnum } from '../enums/StepActionEnum'
 import { StepTitleEnum } from '../enums/StepTitleEnum'

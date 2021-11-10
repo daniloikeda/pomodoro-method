@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "./Timer.css";
+import ButtonNeumorphism from "./ButtonNeumorphism";
 
 function Timer(props) {
   const [countdown, setCountdown] = useState(0);
@@ -61,30 +62,13 @@ function Timer(props) {
           <div className="value">{seconds}</div>
           <div className="label">seconds</div>
         </div>
-      </div>
+      </div>      
       <div className="timer-buttons-wrap">
-        <button
-          className="ui labeled icon button"
-          onClick={
-            timerStopped === false
-              ? handlePauseButtonClick
-              : handlePlayButtonClick
-          }
-        >
-          <i className={!timerStopped ? "pause icon" : "play icon"}></i>
-          {!timerStopped ? "Pause" : "Play"}
-        </button>
-        <button
-          className="ui labeled icon button"
-          onClick={handleResetButtonClick}
-        >
-          <i className="stop icon"></i>
-          Stop
-        </button>
-        <button className="ui labeled icon button" onClick={handleNextAction}>
-          <i className="chevron right icon"></i>
-          Next
-        </button>
+        <ButtonNeumorphism buttonLabel={!timerStopped ? "Pause" : "Play"} icon={!timerStopped ? "pause" : "play"} 
+          handleButtonClick={ timerStopped === false ? handlePauseButtonClick : handlePlayButtonClick}>          
+        </ButtonNeumorphism>
+        <ButtonNeumorphism buttonLabel="Stop" icon="stop" handleButtonClick={handleResetButtonClick}></ButtonNeumorphism>
+        <ButtonNeumorphism buttonLabel="Next" icon="chevron right" handleButtonClick={handleNextAction}></ButtonNeumorphism>   
       </div>
     </div>
   );
