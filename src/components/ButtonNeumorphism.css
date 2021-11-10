@@ -9,6 +9,7 @@
     background-color:transparent;
     box-shadow: -3px -3px 13px #dde1e773, 3px 3px 5px rgba(94, 104, 121, 0.288);
     border-radius: 3px;
+    transition: box-shadow 3s;
 }
 
 .neumorphism-wrapper:first-child {
@@ -32,6 +33,7 @@
     display: flex;
     justify-content: start;
     align-items: center;
+    cursor: pointer;
 }
 
 .neumorphism-button:active {
@@ -53,4 +55,5 @@
 
 .neumorphism-button-label {
     margin-left: 20px;
+    cursor: pointer;
 }
