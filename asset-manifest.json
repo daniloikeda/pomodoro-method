@@ -1,8 +1,8 @@
 {
   "files": {
-    "main.css": "/pomorodo-method/static/css/main.735eadcb.chunk.css",
-    "main.js": "/pomorodo-method/static/js/main.750e9859.chunk.js",
-    "main.js.map": "/pomorodo-method/static/js/main.750e9859.chunk.js.map",
+    "main.css": "/pomorodo-method/static/css/main.38db14bc.chunk.css",
+    "main.js": "/pomorodo-method/static/js/main.8c5840bb.chunk.js",
+    "main.js.map": "/pomorodo-method/static/js/main.8c5840bb.chunk.js.map",
     "runtime-main.js": "/pomorodo-method/static/js/runtime-main.a9eb3cc9.js",
     "runtime-main.js.map": "/pomorodo-method/static/js/runtime-main.a9eb3cc9.js.map",
     "static/css/2.831e4de6.chunk.css": "/pomorodo-method/static/css/2.831e4de6.chunk.css",
@@ -12,15 +12,16 @@
     "static/js/3.7001e820.chunk.js.map": "/pomorodo-method/static/js/3.7001e820.chunk.js.map",
     "index.html": "/pomorodo-method/index.html",
     "static/css/2.831e4de6.chunk.css.map": "/pomorodo-method/static/css/2.831e4de6.chunk.css.map",
-    "static/css/main.735eadcb.chunk.css.map": "/pomorodo-method/static/css/main.735eadcb.chunk.css.map",
+    "static/css/main.38db14bc.chunk.css.map": "/pomorodo-method/static/css/main.38db14bc.chunk.css.map",
     "static/js/2.6932fd4b.chunk.js.LICENSE.txt": "/pomorodo-method/static/js/2.6932fd4b.chunk.js.LICENSE.txt",
+    "static/media/TimerFinished.1238e8ed.wav": "/pomorodo-method/static/media/TimerFinished.1238e8ed.wav",
     "static/media/semantic.min.css": "/pomorodo-method/static/media/outline-icons.ddae9b1b.woff"
   },
   "entrypoints": [
     "static/js/runtime-main.a9eb3cc9.js",
     "static/css/2.831e4de6.chunk.css",
     "static/js/2.6932fd4b.chunk.js",
-    "static/css/main.735eadcb.chunk.css",
-    "static/js/main.750e9859.chunk.js"
+    "static/css/main.38db14bc.chunk.css",
+    "static/js/main.8c5840bb.chunk.js"
   ]
 }
