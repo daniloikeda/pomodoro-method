@@ -5,15 +5,16 @@ function Contact (props)
 {
     return(
         <div className="contact-wrapper">
-            <div className="contact_item">
-                <i aria-hidden="true" className="github icon"></i> Github
-            </div>
-            <div className="contact_item">
-                <i aria-hidden="true" className="linkedin icon"></i> Linkedin
-            </div>
-            <div className="contact_item">
-                <i aria-hidden="true" className="mail icon"></i>dcidaniloikeda@hotmail.com
-            </div>
+            <a href="https://github.com/daniloikeda" target="_blank">
+                <div className="contact_item github">
+                    <i aria-hidden="true" className="github big icon"></i>
+                </div>
+            </a>
+            <a href="https://www.linkedin.com/in/danilo-carneiro-ikeda-310492100/" target="_blank">
+                <div className="contact_item linkedin">
+                    <i aria-hidden="true" className="linkedin big icon"></i>
+                </div>
+            </a>            
         </div>
     );
 }
