@@ -1,17 +1,31 @@
 import React, { useState, useEffect } from "react";
 import "./Timer.css";
 import ButtonNeumorphism from "./ButtonNeumorphism";
+import TimerFinished from "../assets/TimerFinished.wav";
 
 function Timer(props) {
   const [countdown, setCountdown] = useState(0);
   const [timerId, setTimerId] = useState();
   const [timerStopped, setTimerStopped] = useState(true);
   const [remainingCountDown, setRemainingCountDown] = useState(0);
+  var timerAudio = new Audio(TimerFinished);
+  var seconds = String(remainingCountDown % 60).padStart(2, 0);
+  var minutes = String(Math.floor(remainingCountDown / 60)).padStart(2, 0);
 
   //#region functions
+
+  const playTimerAudio = () => {
+    timerAudio.loop = true;
+    timerAudio.play();
+  }
+  
+  const pauseTimerAudio = () => {
+    timerAudio.pause();
+  }
+
   const handlePlayButtonClick = () => {
     setTimerStopped(false);
-
+    pauseTimerAudio();
     setTimerId(
       setInterval(() => {
         setRemainingCountDown((remainingCountDown) => remainingCountDown - 1);
@@ -20,24 +34,24 @@ function Timer(props) {
   }
 
   const handlePauseButtonClick = () => {
+    pauseTimerAudio();
     clearInterval(timerId);
     setTimerStopped(true);
   };
 
   const handleResetButtonClick = () => {
+    pauseTimerAudio();
     clearInterval(timerId);
     setTimerStopped(true);
     setRemainingCountDown(countdown);
   };
 
-  var seconds = String(remainingCountDown % 60).padStart(2, 0);
-  var minutes = String(Math.floor(remainingCountDown / 60)).padStart(2, 0);
-
   const handleNextAction = () => {
+    pauseTimerAudio();
     clearInterval(timerId);
     props.proceedToTheNextStep();
-  }
-  
+  };
+
   useEffect(() => {
     setTimerStopped(true);
     setCountdown(props.countdown * 60);
@@ -46,8 +60,9 @@ function Timer(props) {
   }, [props.countdown]);
 
   useEffect(() => {
-    if (remainingCountDown < 0) {
-      handleNextAction();
+    if (remainingCountDown <= 0) {
+      clearInterval(timerId);    
+      playTimerAudio();
     }
   }, [remainingCountDown]);
 
