@@ -31,7 +31,7 @@
     font-family: Lato,'Helvetica Neue',Arial,Helvetica,sans-serif;
     font-weight: 700;
     display: flex;
-    justify-content: start;
+    justify-content: flex-start;
     align-items: center;
     cursor: pointer;
 }

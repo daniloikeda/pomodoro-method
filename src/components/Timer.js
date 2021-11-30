@@ -61,10 +61,12 @@ function Timer(props) {
 
   useEffect(() => {
     if (remainingCountDown <= 0) {
-      clearInterval(timerId);    
-      playTimerAudio();
+      clearInterval(timerId);
+      if (timerStopped === false) {
+        playTimerAudio();
+      }
     }
-  }, [remainingCountDown]);
+  }, [remainingCountDown, timerStopped, timerId]);
 
   return (
     <div className="timer">
